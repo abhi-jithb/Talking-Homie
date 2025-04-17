@@ -113,12 +113,12 @@ def speak(text, is_detailed=False):
     try:
         if not is_detailed:
             minimal = text.strip().split(".")[0]
-            print(f"Jarvis: {minimal}")
-            engine.say(minimal)
+    print(f"Jarvis: {minimal}")
+    engine.say(minimal)
         else:
             print(f"Jarvis: {text}")
             engine.say(text)
-        engine.runAndWait()
+    engine.runAndWait()
     except RuntimeError as e:
         # If run loop already started, just print the message
         print(f"Jarvis: {text}")
@@ -143,18 +143,18 @@ def listen():
         r.dynamic_energy_threshold = True
         try:
             audio = r.listen(source, timeout=3)  # Reduced timeout to 3 seconds
-            try:
-                query = r.recognize_google(audio)
-                print(f"You: {query}")
-                return query
-            except sr.UnknownValueError:
+    try:
+        query = r.recognize_google(audio)
+        print(f"You: {query}")
+        return query
+    except sr.UnknownValueError:
                 speak("Sorry, I didn't catch that.")
-                return None
-            except sr.RequestError:
-                speak("Sorry, there's a problem with the speech service.")
+        return None
+    except sr.RequestError:
+        speak("Sorry, there's a problem with the speech service.")
                 return None
         except sr.WaitTimeoutError:
-            return None
+        return None
 
 
 # 🌦 Get weather function
@@ -198,7 +198,7 @@ def open_app(app_name):
             else:
                 subprocess.Popen(path)
             speak(f"Opening {app_name} for you!")
-        else:
+            else:
             speak(f"Sorry, I don't know how to open {app_name}.")
     except Exception as e:
         print(f"Error opening {app_name}: {e}")
@@ -206,12 +206,12 @@ def open_app(app_name):
 
 def open_essentials():
     speak("Opening your essential apps...")
-    
+
     web_apps = {
-        "GitHub": "https://github.com",
-        "ChatGPT": "https://chat.openai.com",
-        "Canva": "https://www.canva.com",
-        "Figma": "https://www.figma.com",
+                "GitHub": "https://github.com",
+                "ChatGPT": "https://chat.openai.com",
+                "Canva": "https://www.canva.com",
+                "Figma": "https://www.figma.com",
         "YouTube": "https://youtube.com"
     }
     
@@ -224,13 +224,13 @@ def open_essentials():
     
     # Open web apps
     for name, url in web_apps.items():
-        try:
-            speak(f"Opening {name}...")
-            webbrowser.open(url)
-        except Exception as e:
+                try:
+                    speak(f"Opening {name}...")
+                    webbrowser.open(url)
+                except Exception as e:
             speak(f"Couldn't open {name}.")
-            print(f"Error opening {name}: {e}")
-    
+                    print(f"Error opening {name}: {e}")
+
     # Open desktop apps
     for name, path in desktop_apps.items():
         try:
@@ -411,7 +411,7 @@ def set_reminder(reminder_text, time_input):
         else:
             return "Failed to set reminder"
             
-    except Exception as e:
+            except Exception as e:
         print(f"Error setting reminder: {e}")
         return "Sorry, I couldn't set the reminder."
 
@@ -428,7 +428,7 @@ def chat():
         
         # Get contextual information
         context = get_contextual_response(user_input)
-        
+
         if "stop" in command:
             speak("Goodbye! Take care.")
             break
@@ -484,7 +484,7 @@ def chat():
                 # Handle web URLs
                 if "youtube" in command:
                     response = "Opening YouTube for you!"
-                    webbrowser.open("https://youtube.com")
+            webbrowser.open("https://youtube.com")
                 elif "github" in command:
                     response = "Opening GitHub for you!"
                     webbrowser.open("https://github.com")
@@ -540,7 +540,7 @@ def chat():
                 cleaned_response = strip_markdown(response.text)
                 speak(cleaned_response, is_detailed=True)
                 update_context(user_input, cleaned_response)
-            except Exception as e:
+                except Exception as e:
                 print("Error:", e)
                 response = "Sorry, I couldn't process that request right now."
                 speak(response)
